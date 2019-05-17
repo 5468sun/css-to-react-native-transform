@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mediaQuery from "css-mediaquery";
 import transformCSS from "css-to-react-native";
 import parseCSS from "css/lib/parse";
@@ -14,6 +15,7 @@ import { values } from "./utils/values";
 
 const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
 const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/;
+const px2dpUnitRe = /^([+-]?[0-9.]+)(pxdp|pxfz)$/; // pxdp for dimension size, pxfz for fontzize
 const percentRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?%)$/;
 const unsupportedUnitRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(ch|em|ex|cm|mm|in|pc|pt))$/;
 const shorthandBorderProps = [
@@ -33,6 +35,7 @@ const transformDecls = (styles, declarations, result) => {
 
     const isLengthUnit = lengthRe.test(value);
     const isViewportUnit = viewportUnitRe.test(value);
+    const isPx2dpUnit = px2dpUnitRe.test(value);
     const isPercent = percentRe.test(value);
     const isUnsupportedUnit = unsupportedUnitRe.test(value);
 
@@ -40,6 +43,7 @@ const transformDecls = (styles, declarations, result) => {
       property === "line-height" &&
       !isLengthUnit &&
       !isViewportUnit &&
+      !isPx2dpUnit &&
       !isPercent &&
       !isUnsupportedUnit
     ) {
@@ -48,6 +52,10 @@ const transformDecls = (styles, declarations, result) => {
 
     if (!result.__viewportUnits && isViewportUnit) {
       result.__viewportUnits = true;
+    }
+
+    if (!result.__px2dpUnits && isPx2dpUnit) {
+      result.__px2dpUnits = true;
     }
 
     if (shorthandBorderProps.indexOf(property) > -1) {
