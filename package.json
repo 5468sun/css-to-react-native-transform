@@ -11,6 +11,7 @@
     "build": "babel src --ignore *.spec.js --out-dir dist",
     "test": "jest --coverage",
     "prepublish": "npm run build",
+    "prepare": "npm run build",
     "release": "npmpub"
   },
   "devDependencies": {
