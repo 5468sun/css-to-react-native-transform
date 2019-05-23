@@ -59,7 +59,7 @@
   "dependencies": {
     "css": "^2.2.4",
     "css-mediaquery": "^0.1.2",
-    "css-to-react-native": "git+https://github.com/5468sun/css-to-react-native-transform.git"
+    "css-to-react-native": "git+https://github.com/5468sun/css-to-react-native.git"
   },
   "repository": {
     "type": "git",
